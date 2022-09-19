@@ -14,24 +14,24 @@ bool findTriples(int A[], int size, int sum) {
             }
         }
     }
-    cout << "No Triples Found!!! " << endl;
+    // cout << "No Triples Found!!! " << endl;
     return false;
 }
 
 
 int main() {
     int size;
-    cout << "Please Enter The Size of The Array: ";
+    // cout << "Please Enter The Size of The Array: ";
     cin >> size;
 
     int arr[size];
     for (int i = 0; i < size; ++i) {
-        cout << "Enter [" << i << "] Array Element:  ";
+        // cout << "Enter [" << i << "] Array Element:  ";
         cin >> arr[i];
     }
 
     int sum;
-    cout << "Please Enter The Sum of The Triples: ";
+    // cout << "Please Enter The Sum of The Triples: ";
     cin >> sum;
 
     findTriples(arr, size, sum);
