@@ -1,6 +1,8 @@
 #include <iostream>
 #include <algorithm>
+
 #include <vector>
+
 using namespace std;
 
 int threeNumberSum(int array[],int size){
@@ -10,6 +12,9 @@ int threeNumberSum(int array[],int size){
 //    std::sort(array.begin(),array.end());
     int left, right, findingSum;
     vector<vector<int>> res = {};
+
+    int left, right, findingSum;
+
     for (int i = 0; i < size - 2; i++) {
         if (targetSum < array[i]) break;
         findingSum = targetSum - array[i];
@@ -21,8 +26,6 @@ int threeNumberSum(int array[],int size){
             } else if ((array[left] + array[right]) > findingSum){
                 right--;
             } else {
-//                vector<int> triplet = {array[i],array[left],array[right]};
-//                res.push_back(triplet);
                 count++;
                 left++;
                 right--;
@@ -30,13 +33,15 @@ int threeNumberSum(int array[],int size){
         }
     }
 
+
     return count;
 }
 
+
 int main() {
     int size;
-    // cout << "Please Enter The Size of The Array: ";
     cin >> size;
+
 
     int array[size] ;//{1,2,-3};
     for (int i = 0; i < size; ++i) {
@@ -46,5 +51,13 @@ int main() {
     
     cout << threeNumberSum(array, size);
     
+
+    int array[size] ;
+    for (int i = 0; i < size; ++i) {
+        cin>> array[i];
+    }
+    cout << threeNumberSum(array, size);
+
+
     return 0;
 }
