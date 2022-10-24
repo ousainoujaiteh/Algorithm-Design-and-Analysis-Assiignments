@@ -10,7 +10,7 @@ int max(int x, int y) {
 }
 
 // Function to find the maximum subarray sum using divide-and-conquer
-int maximum_sum(vector<int> &nums, int low, int high) {
+int maximum_sum(int nums[], int low, int high) {
     // If the array contains 0 or 1 element
     if (high <= low) {
         return nums[low];
@@ -50,8 +50,8 @@ int maximum_sum(vector<int> &nums, int low, int high) {
     return max(max_left_right, left_max + right_max);
 }
 
-int maxSubArray(vector<int> &nums) {
-    int n = nums.size();
+int maxSubArray(int nums[],int size) {
+    int n = size;
     return maximum_sum(nums, 0, n - 1);
 }
 
@@ -59,8 +59,11 @@ int main() {
     int size;
     cin >> size;
 
-    vector<int> nums{ -2,1,-3,4,-1,2,1,-5,4 };
-    cout << maxSubArray(nums);
+    int nums[size] ;
+    for (int i = 0; i < size; ++i) {
+        cin>> nums[i];
+    }
+    cout << maxSubArray(nums,size);
 
     return 0;
 }
