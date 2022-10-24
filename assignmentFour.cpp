@@ -1,78 +1,34 @@
-#include <stdlib.h>
-#include <ctype.h>
 #include <iostream>
 #include <vector>
-#include <string>
-#include <map>
+
 using namespace std;
 
-
-bool isOperator(char ch){
-    return (ch=='+' || ch=='-' || ch=='*');
-}
-
-
-//Divide & Conque  - recursive way
 vector<int> diffWaysToCompute(string input) {
-    //if the result has been cacluated, then just get it from the cache and return 
-    static map< string, vector<int> > cache;
-    if ( cache.find(input) != cache.end() ){
-        return cache[input];
-    }
-
-
-    vector<int> result; 
-    for (int i=0; i<input.size(); i++){
-        char ch = input[i];
-        if (isOperator(ch)){
-            //split the input to two parts, left part and right part 
-            //And recursively invoke this function.
-            string left  = input.substr(0, i);
-            string right = input.substr(i+1);
-            vector<int> lv = diffWaysToCompute(left);
-            vector<int> rv = diffWaysToCompute(right);
-
-            //merge two result to one
-            for(int li=0; li<lv.size(); li++) {
-                for(int ri=0; ri<rv.size(); ri++) {
-                    switch(ch){
-                        case '+' : result.push_back(lv[li] + rv[ri]); break;
-                        case '-' : result.push_back(lv[li] - rv[ri]); break;
-                        case '*' : result.push_back(lv[li] * rv[ri]); break;
+    vector<int> res;
+    for (int i = 0; i < input.size(); ++i) {
+        if (input[i] < '0') {
+            vector<int> v1 = diffWaysToCompute(input.substr(0, i));
+            vector<int> v2 = diffWaysToCompute(input.substr(i + 1));
+            for (auto i1 : v1) for (auto i2 : v2) switch (input[i]) {
+                        case '+': res.push_back(i1 + i2); break;
+                        case '-': res.push_back(i1 - i2); break;
+                        case '*': res.push_back(i1 * i2);
                     }
-                }
-            }
-
         }
     }
-    //if we cannot find the "operator" in input, 
-    //which means, it is a number, just put the number into the result. 
-    if (result.size()==0) {
-        result.push_back(atoi(input.c_str()));
-    }
-    
-    //cache the result, key = input, value = result;
-    cache[input] = result;
-
-    return result;
+    if (res.empty()) res.push_back(stoi(input));
+    return res;
 }
 
-void printVector(vector<int>& v) {
-    cout << "[";
-    for(int i=0; i<v.size(); i++) {
-        cout << v[i] << (i==v.size()-1 ? "]":", ");
-    }
-    cout << endl;
-}
-
-int main(int argc, char**argv) 
-{
-    string exp = "2*3-4*5";
-    if ( argc > 1 ){
-        exp = argv[1];
-    }
-    vector<int> v = diffWaysToCompute(exp);
-    cout << exp << endl;
-    printVector(v);
+int main() {
+    string input;
+    cin >> input;
+    std::vector<int> values = diffWaysToCompute(input);
+    int size = values.size();
+    int nums[size];
+    std::copy(values.begin(), values.end(), nums);
+    cout << '[';
+    for (int i = 0; i < size; ++i)
+        cout << *(nums+i) << (i != size-1 ? ',' : ']');
     return 0;
 }
