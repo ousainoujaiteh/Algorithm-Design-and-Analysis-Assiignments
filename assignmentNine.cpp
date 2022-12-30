@@ -1,42 +1,36 @@
+#include <iostream>
+#include<cstring>
 using namespace std;
-int maxAmount(int* arr)
-{   
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-	if (n == 0)
-		return 0;
-
-	int v1 = arr[0];
-	if (n == 1)
-		return v1;
-
-	int v2 = max(arr[0], arr[1]);
-	if (n == 2)
-		return v2;
-	int max_val;
-	for (int i = 2; i < n; i++) {
-		max_val = max(arr[i] + v1, v2);
-		v1 = v2;
-		v2 = max_val;
-	}
-
-	return max_val;
-}
-
-int rob(vector<int>& A){
-    int prev2 = 0, prev = 0m cur =0
-    for (int i : A) {
-        cur = max(prev, i + prev2);
-        prev2 = prev;
-        prev = cur;
-    }
-    return cur;
-}
 
 int main()
 {
-	int arr[] = { 6, 7, 1, 3, 8, 2, 4 };
-	// int n = sizeof(arr) / sizeof(arr[0]);
-	cout << maxAmount(arr);
+	int m, n;
+
+    cin >> m >> n; // m = capacity of bag n = number of item
+
+    int arrw [n]; 
+    int arrv [n];
+    for(int i =0; i<n; i++)
+    {
+        cin>> arrw[i] >> arrv[i]; // arrw= weight of object, arrv= value of object
+    }
+
+    int k [m+1]; // 1D array used instead of 2D array
+
+    memset(k,0,sizeof(k)); //memorization array
+
+    for(int i =1; i<n+1;i++) //n
+    {
+        for(int w=m; w>=0; w--){ //m
+            
+            //if( i ==0|| w ==0) // n =0 or w =0
+              //  k[i][w]=0;
+
+            if(arrw[i-1]<=w) //weight of object< = w
+            k[w]= max(k[w], k[w-arrw[i-1]]+arrv[i-1]);    //fill the array 
+        }
+    }
+
+			cout << k[m];// But it doesnot give correct answer where M=8 n =4 and arrw ={1,2,5,6} and arrv ={2,3,4,5} output should be 8 but it gives 9
 	return 0;
 }
